@@ -1,4 +1,4 @@
-import {h} from 'preact';
+import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
@@ -9,50 +9,54 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const options = {
     cMapUrl: 'cmaps/',
     cMapPacked: true,
-  };
-  
+};
 
-const PDFViewer = () => {
 
-    const [file, setFile] = useState('');
+const PDFViewer = ({ file, setFile }) => {
+
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
-  
-    function onFileChange(event) {
-      setFile(event.target.files[0]);
-    }
-  
-    function onDocumentLoadSuccess({ numPages }) {
-      setNumPages(numPages);
-    }
-  
-    return (
-      <div className="Example">
-        <header>
-          <h1>react-pdf sample page</h1>
-        </header>
-        <div className="Example__container">
-          <div className="Example__container__load">
-            <label htmlFor="file">Load from file:</label>
-            {' '}
-            <input
-              onChange={onFileChange}
-              type="file"
-            />
-          </div>
-          <div className="Example__container__document">
-            <Document
-              file={file}
-              onLoadSuccess={onDocumentLoadSuccess}
-              options={options}
-            >
-              <Page pageNumber={pageNumber} />
-            </Document>
-            <p>Page {pageNumber} of {numPages}</p>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
-  export default PDFViewer;
+    function onFileChange(event) {
+        setFile(event.target.files[0]);
+    }
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
+    return (
+        <>
+            {!file &&
+                <div className="mx-3">
+                    <label htmlFor="formFile" className="form-label">Open PDF</label>
+                    <input onChange={onFileChange} className="form-control form-control-sm" type="file" id="formFile" />
+                </div>
+            }
+            {file &&
+                <div className="h-50 overflow-auto">
+                    <Document
+                        file={file}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                        options={options}
+                    >
+                        <Page pageNumber={pageNumber} />
+                    </Document>
+                    <p>Page {pageNumber} of {numPages}</p>
+                    <nav aria-label="Page navigation example">
+                        <ul className="pagination justify-content-center">
+                            <li className={pageNumber === 1 ? "page-item disabled": "page-item"}>
+                                <button className="page-link" onclick={() => setPageNumber(pageNumber-1)}>Previous</button>
+                            </li>
+                            <li className="page-item">
+                                <button className="page-link" onclick={() => setPageNumber(pageNumber+1)}>Next</button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+        </>
+    );
+};
+
+export default PDFViewer;
