@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useRef, useEffect } from 'preact/hooks';
 import videojs from 'video.js';
-import '../../assets/styles/video-js.css';
+import 'video.js/dist/video-js.css';
 
 const VideoJS = ( {options, onReady }) => {
     const videoref = useRef(null);
@@ -37,7 +37,7 @@ const VideoJS = ( {options, onReady }) => {
     return (
         <div>
             <video ref={videoref} className="video-js vjs-big-play-centered" />
-        </div>
+        </div>  
     )
 }
 
