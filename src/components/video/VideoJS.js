@@ -1,44 +1,52 @@
-import { h } from 'preact';
-import { useRef, useEffect } from 'preact/hooks';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import React, { useRef, useEffect } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
+import 'videojs-youtube/dist/Youtube.min.js';
 
-const VideoJS = ( {options, onReady }) => {
-    const videoref = useRef(null);
-    const playerref = useRef(null);
+export const VideoJS = ({ options, onReady }) => {
 
-    useEffect( () => {
-        if(!playerref.current){
-            const videoElement = videoref.current;
-            if(!videoElement) return;
-
-            const player = playerref.current = videojs(videoElement, options, () => {
-                console.log('player is ready');
-                onReady && onReady(player);
-            });
-        }
-        
-        else {
-            const player = playerref.current;
-            player.autoplay(options.autoplay);
-            player.src(options.sources);
-        }
-    }, [options, onReady]);
+    const videoRef = useRef(null);
+    const playerRef = useRef(null);
 
     useEffect(() => {
+        // make sure Video.js player is only initialized once
+        if (!playerRef.current) {
+            const videoElement = videoRef.current;
+            if (!videoElement) return;
+
+            const player = playerRef.current = videojs(videoElement, options, () => {
+                console.log("player is ready");
+                onReady && onReady(player);
+            });
+        } else {
+            const player = playerRef.current;
+            player.autoplay(options.autoplay);
+            // player.src(options.sources);
+            // playerRef.data-setup = '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }';
+        }
+    }, [options]);
+
+    // Dispose the Video.js player when the functional component unmounts
+    useEffect(() => {
         return () => {
-            if(playerref.current){
-                playerref.current.dispose();
-                playerref.current = null;
+            if (playerRef.current) {
+                playerRef.current.dispose();
+                playerRef.current = null;
             }
         };
     }, []);
 
     return (
-        <div>
-            <video ref={videoref} className="video-js vjs-big-play-centered" />
-        </div>  
-    )
+        <div data-vjs-player>
+            <video
+                className="video-js vjs-default-skin"
+                controls
+                autoplay
+                data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "iv_load_policy": 1 } }'
+            >
+            </video>
+        </div>
+    );
 }
 
-export default VideoJS
+export default VideoJS;

@@ -1,15 +1,8 @@
-import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import React, { useState } from 'react';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-
-
-const options = {
-    cMapUrl: 'cmaps/',
-    cMapPacked: true,
-};
 
 
 const PDFViewer = ({ file, setFile }) => {
