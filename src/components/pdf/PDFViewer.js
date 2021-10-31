@@ -31,7 +31,6 @@ const PDFViewer = ({ file, setFile }) => {
                     <Document
                         file={file}
                         onLoadSuccess={onDocumentLoadSuccess}
-                        options={options}
                     >
                         <Page pageNumber={pageNumber} />
                     </Document>

@@ -10,10 +10,7 @@ const Player = () => {
     controls: true,
     responsive: true,
     fluid: true,
-    sources: [{
-      src: '/path/to/video.mp4',
-      type: 'video/mp4'
-    }]
+    width: '600px'
   }
 
   const handlePlayerReady = (player) => {
@@ -35,7 +32,7 @@ const Player = () => {
       return;
     }
     // [update player through instance's api]
-    playerRef.current.src([{src: 'http://ex.com/video.mp4', type: 'video/mp4'}]);
+    // playerRef.current.src([{src: 'http://ex.com/video.mp4', type: 'video/mp4'}]);
     playerRef.current.autoplay(false);
   };
 

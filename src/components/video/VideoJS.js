@@ -39,9 +39,9 @@ export const VideoJS = ({ options, onReady }) => {
     return (
         <div data-vjs-player>
             <video
+                width={options.width}
+                height={options.height}
                 className="video-js vjs-default-skin"
-                controls
-                autoplay
                 data-setup='{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}], "youtube": { "iv_load_policy": 1 } }'
             >
             </video>
