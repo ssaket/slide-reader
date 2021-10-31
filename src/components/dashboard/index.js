@@ -7,7 +7,7 @@ const Dashboard = () => {
     return (
         <div className="mt-3.5">
             <div className="flex justify-center space-x-2">
-                <div className="flex-initial h-1/3">
+                <div className="flex-initial shadow-xl">
                     <Player />
                 </div>
                 <div className="flex-initial self-center">
