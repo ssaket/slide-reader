@@ -24,7 +24,7 @@ export const VideoJS = ({ options, onReady }) => {
             // player.src(options.sources);
             // playerRef.data-setup = '{ "techOrder": ["youtube"], "sources": [{ "type": "video/youtube", "src": "https://www.youtube.com/watch?v=xjS6SftYQaQ"}] }';
         }
-    }, [options]);
+    }, [options, onReady]);
 
     // Dispose the Video.js player when the functional component unmounts
     useEffect(() => {
